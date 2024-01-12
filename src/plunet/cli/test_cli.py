@@ -40,7 +40,7 @@ def test(
 
     Example
     -------
-    unet test --image-path <path-to-your-image>
+    plunet test --image-path <path-to-your-image>
     --ckpt-path <path-to-your-model>
     """
     _test(

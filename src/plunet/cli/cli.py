@@ -29,13 +29,13 @@ def callback():
     You can choose between the different options listed below.
     To see the help for a specific command, run:
 
-    unet <command> --help
+    plunet <command> --help
 
     -------
 
     Example:
     -------
-    unet predict --tomogram-path <path-to-your-tomo>
+    plunet predict --tomogram-path <path-to-your-tomo>
         --ckpt-path <path-to-model-checkpoint>
         --out-folder ./segmentations
 

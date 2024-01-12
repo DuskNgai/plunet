@@ -11,7 +11,7 @@ def train(
         ...,
         help='Data directory path, following the required structure. '
              'To learn more about the required data structure, '
-             'type "unet data_structure_help"',
+             'type "plunet data_structure_help"',
         **PKWARGS,
     ),
     batch_size: int = Option(  # noqa: B008
@@ -61,7 +61,7 @@ def train(
     ----------
     data_dir : str
         Path to the data directory, structured as per the Unet's requirement.
-        Use "unet data_structure_help" for detailed information on the required
+        Use "plunet data_structure_help" for detailed information on the required
         data structure.
     batch_size : int
         Number of samples per batch, by default 2.
