@@ -28,7 +28,7 @@ dynamic = ["version"]
 dependencies = [
     "monai",
     "pytorch-lightning",
-    "torch==2.0.1",
+    "torch",
     "torchvision",
     "tensorboard",
     "imageio",

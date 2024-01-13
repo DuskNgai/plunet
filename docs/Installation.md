@@ -48,6 +48,6 @@ Here is a collection of common issues and how to fix them:
   The latest Pytorch versions require higher CUDA versions that may not be installed on your system yet. You can either install the new CUDA version or (maybe easier) downgrade Pytorch to a version that is compatible:
 
   ```shell
-  pip uninstall torch
-  pip install torch==2.0.1
+  pip uninstall torch torchvision
+  pip install torch==2.0.1 torchvision==0.15.2
   ```

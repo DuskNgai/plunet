@@ -8,4 +8,4 @@ See [Installation](docs/Installation.md) for instructions on how to install Unet
 
 ## Instructions
 
-
+See [Training](docs/Training.md) for instructions on how to train a model.
