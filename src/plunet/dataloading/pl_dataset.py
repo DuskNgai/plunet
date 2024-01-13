@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 from typing import Dict
 
 # from skimage import io
@@ -22,9 +22,9 @@ class PLDataset(Dataset):
 
     Attributes
     ----------
-    img_folder : str
+    img_folder : Path
         The path to the directory containing the image files.
-    label_folder : str
+    label_folder : Path
         The path to the directory containing the label files.
     train : bool, default False
         A flag indicating whether the dataset is used for training or not.
@@ -43,7 +43,7 @@ class PLDataset(Dataset):
         Loads image-label pairs into memory from the specified directories.
     initialize_imgs_paths() -> None
         Initializes the list of paths to image-label pairs.
-    test(test_folder: str, num_files: int = 20) -> None
+    test(test_folder_str: str, num_files: int = 20) -> None
         Tests the data loading and augmentation process by generating
             a set of images and their labels. Test images are then stored
             for sanity checks.
@@ -51,8 +51,8 @@ class PLDataset(Dataset):
 
     def __init__(
         self,
-        img_folder: str,
-        label_folder: str,
+        img_folder: Path,
+        label_folder: Path,
         train: bool = False,
         aug_prob_to_one: bool = False,
     ) -> None:
@@ -61,9 +61,9 @@ class PLDataset(Dataset):
 
         Parameters
         ----------
-        img_folder : str
+        img_folder : Path
             The path to the directory containing the image files.
-        label_folder : str
+        label_folder : Path
             The path to the directory containing the label files.
         train : bool, default False
             A flag indicating whether the dataset is used for training or validation.
@@ -136,13 +136,13 @@ class PLDataset(Dataset):
         and have the same file base names.
         """
         self.data_paths = []
-        for filename in os.listdir(self.label_folder):
-            label_filename = os.path.join(self.label_folder, filename)
+        for filename in self.label_folder.iterdir():
+            label_filename = self.label_folder.joinpath(filename)
             filename = filename[:-7] + ".png"
-            img_filename = os.path.join(self.img_folder, filename)
+            img_filename = self.img_folder.joinpath(filename)
             self.data_paths.append((img_filename, label_filename))
 
-    def test(self, test_folder: str, num_files: int = 20) -> None:
+    def test(self, test_folder_str: str, num_files: int = 20) -> None:
         """
         Tests the data loading and augmentation process.
 
@@ -151,33 +151,31 @@ class PLDataset(Dataset):
 
         Parameters
         ----------
-        test_folder : str
+        test_folder_str : str
             The path to the directory where the generated images and labels
             will be saved.
         num_files : int, default 20
             The number of image-label pairs to be generated and saved.
         """
-        os.makedirs(test_folder, exist_ok=True)
+        test_folder = Path(test_folder_str)
+        test_folder.mkdir(parents=True, exist_ok=True)
 
         for i in range(num_files):
             test_sample = self.__getitem__(i % self.__len__())
             for num_img in range(0, test_sample["image"].shape[-1], 30):
                 io.imsave(
-                    os.path.join(
-                        test_folder, f"test_img{i}_group{num_img}.png"),
+                    test_folder.joinpath(f"test_img{i}_group{num_img}.png"),
                     test_sample["image"][0, :, :, num_img],
                 )
 
             for num_mask in range(0, test_sample["label"][0].shape[-1], 30):
                 io.imsave(
-                    os.path.join(
-                        test_folder, f"test_mask{i}_group{num_mask}.png"),
+                    test_folder.joinpath(f"test_mask{i}_group{num_mask}.png"),
                     test_sample["label"][0][0, :, :, num_mask],
                 )
 
             for num_mask in range(0, test_sample["label"][1].shape[0], 15):
                 io.imsave(
-                    os.path.join(
-                        test_folder, f"test_mask_ds2_{i}_group{num_mask}.png"),
+                    test_folder.joinpath(f"test_mask_ds2_{i}_group{num_mask}.png"),
                     test_sample["label"][1][0, :, :, num_mask],
                 )

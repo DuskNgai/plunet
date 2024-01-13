@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 from typing import Optional
 
 import pytorch_lightning as pl
@@ -25,13 +25,13 @@ class PLDataModule(pl.LightningDataModule):
 
     Attributes
     ----------
-    train_img_dir : str
+    train_img_dir : Path
         The path to the directory containing training images.
-    train_lab_dir : str
+    train_lab_dir : Path
         The path to the directory containing training labels.
-    val_img_dir : str
+    val_img_dir : Path
         The path to the directory containing validation images.
-    val_lab_dir : str
+    val_lab_dir : Path
         The path to the directory containing validation labels.
     train_dataset : PLDataset
         The training dataset.
@@ -64,11 +64,11 @@ class PLDataModule(pl.LightningDataModule):
             └── ...
         """
         super().__init__()
-        self.data_dir = data_dir
-        self.train_img_dir = os.path.join(self.data_dir, "imagesTr")
-        self.train_lab_dir = os.path.join(self.data_dir, "labelsTr")
-        self.val_img_dir = os.path.join(self.data_dir, "imagesVal")
-        self.val_lab_dir = os.path.join(self.data_dir, "labelsVal")
+        self.data_dir = Path(data_dir)
+        self.train_img_dir = self.data_dir.joinpath("imagesTr")
+        self.train_lab_dir = self.data_dir.joinpath("labelsTr")
+        self.val_img_dir = self.data_dir.joinpath("imagesVal")
+        self.val_lab_dir = self.data_dir.joinpath("labelsVal")
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.aug_prob_to_one = aug_prob_to_one

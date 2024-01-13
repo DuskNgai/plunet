@@ -2,6 +2,7 @@ import csv
 import os
 from typing import Callable
 
+import mrcfile
 import numpy as np
 from PIL import Image
 from torch import Tensor, device
@@ -169,13 +170,13 @@ def store_corrected_image(
     return out_file_thres
 
 
-def read_image(image_file: str) -> np.ndarray:
+def read_image(image_file: str | os.PathLike) -> np.ndarray:
     """
     Read image file.
 
     Parameters
     ----------
-    image_file : str
+    image_file : str | os.PathLike
         Path to the image file.
 
     Returns
@@ -189,13 +190,13 @@ def read_image(image_file: str) -> np.ndarray:
     return image
 
 
-def write_image(out_file: str, image: np.ndarray) -> None:
+def write_image(out_file: str | os.PathLike, image: np.ndarray) -> None:
     """
     Write image file.
 
     Parameters
     ----------
-    out_file : str
+    out_file : str | os.PathLike
         Path to the image file. (Where should it be stored?)
     image: np.ndarray
         2D or 3D image that should be stored in the given file.
@@ -209,13 +210,13 @@ def write_image(out_file: str, image: np.ndarray) -> None:
     image.save(out_file)
 
 
-def read_npy(npy_file: str) -> np.ndarray:
+def read_npy(npy_file: str | os.PathLike) -> np.ndarray:
     """
     Read npy file.
 
     Parameters
     ----------
-    npy_file : str
+    npy_file : str | os.PathLike
         Path to the npy file.
 
     Returns
@@ -228,13 +229,13 @@ def read_npy(npy_file: str) -> np.ndarray:
     return npy
 
 
-def write_npy(out_file: str, npy: np.ndarray) -> None:
+def write_npy(out_file: str | os.PathLike, npy: np.ndarray) -> None:
     """
     Write npy file.
 
     Parameters
     ----------
-    out_file : str
+    out_file : str | os.PathLike
         Path to the npy file. (Where should it be stored?)
     npy: np.ndarray
         2D or 3D npy that should be stored in the given file.
@@ -245,3 +246,44 @@ def write_npy(out_file: str, npy: np.ndarray) -> None:
 
     """
     np.save(out_file, npy)
+
+
+def read_mrc(mrc_file: str | os.PathLike) -> np.ndarray:
+    """
+    Read mrc file.
+
+    Parameters
+    ----------
+    mrc_file : str | os.PathLike
+        Path to the mrc file.
+
+    Returns
+    -------
+    mrc : np.ndarray
+        Numpy array representation of the mrc file.
+
+    """
+    with mrcfile.open(mrc_file, permissive=True) as file:
+        volume = file.data
+    return volume
+
+
+def write_mrc(out_file: str | os.PathLike, mrc: np.ndarray) -> None:
+    """
+    Write mrc file.
+
+    Parameters
+    ----------
+    out_file : str | os.PathLike
+        Path to the mrc file. (Where should it be stored?)
+    mrc: np.ndarray
+        3D mrc that should be stored in the given file.
+
+    Returns
+    -------
+    None
+
+    """
+    with mrcfile.new(out_file, overwrite=True) as file:
+        file.set_data(mrc)
+        file.update_header_from_data()
