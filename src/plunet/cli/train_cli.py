@@ -112,26 +112,18 @@ def data_dir_help():
 
     Note:
     ----
-        The file names of images and their corresponding labels should match.
-        The segmentation algorithm uses this assumption to pair images with labels.
+        The file names of inputs and their corresponding labels should match.
+        The dataset uses this assumption to pair inputs with labels.
     """
     print(
-        "The data directory structure should be as follows:\n"
+        "The data directory structure could be as follows:\n"
         "data_dir/\n"
-        "├── imagesTr/       # Directory containing training images\n"
-        "│   ├── img1.glp.png    # Image file (currently requires .png format)\n"
-        "│   ├── img2.glp.png    # Image file\n"
+        "├── inputs_train/    # Directory containing training inputs\n"
         "│   └── ...\n"
-        "├── imagesVal/      # Directory containing validation images\n"
-        "│   ├── img1.glp.png    # Image file\n"
-        "│   ├── img2.glp.png    # Image file\n"
+        "├── inputs_val/      # Directory containing validation inputs\n"
         "│   └── ...\n"
-        "├── labelsTr/       # Directory containing training labels\n"
-        "│   ├── label1.glpOPC.png  # Label file (currently requires .png format)\n"
-        "│   ├── label2.glpOPC.png  # Label file\n"
+        "├── labels_train/    # Directory containing training labels\n"
         "│   └── ...\n"
-        "└── labelsVal/      # Directory containing validation labels\n"
-        "    ├── label1.glpOPC.png  # Label file\n"
-        "    ├── label2.glpOPC.png  # Label file\n"
+        "└── labels_val/      # Directory containing validation labels\n"
         "    └── ..."
     )

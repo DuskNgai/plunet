@@ -106,7 +106,7 @@ class PLUnet(pl.LightningModule):
             # norm=Norm.INSTANCE,  # I like the instance normalization better than
             # batchnorm in this case, as we will probably have
             # only small batch sizes, making BN more noisy
-            deep_supervision=True,
+            deep_supervision=use_deep_supervision,
             deep_supr_num=2,
         )
         self.super_vision_loss = DeepSuperVisionLoss(

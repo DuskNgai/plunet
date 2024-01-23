@@ -44,24 +44,16 @@ class PLDataModule(pl.LightningDataModule):
     def __init__(self, data_dir, batch_size, num_workers, aug_prob_to_one=False):
         """Initialization of data paths and data loaders.
 
-        The data_dir should have the following structure:
+        The data_dir could have the following structure:
         data_dir/
-        ├── imagesTr/       # Directory containing training images
-        │   ├── img1.glp.png    # Image file (currently requires .png format)
-        │   ├── img2.glp.png    # Image file
+        ├── inputs_train/    # Directory containing training inputs
         │   └── ...
-        ├── imagesVal/      # Directory containing validation images
-        │   ├── img1.glp.png    # Image file
-        │   ├── img2.glp.png    # Image file
+        ├── inputs_val/      # Directory containing validation inputs
         │   └── ...
-        ├── labelsTr/       # Directory containing training labels
-        │   ├── label1.glpOPC.png  # Label file (currently requires .png format)
-        │   ├── label2.glpOPC.png  # Label file
+        ├── labels_train/    # Directory containing training labels
         │   └── ...
-        └── labelsVal/      # Directory containing validation labels
-            ├── label1.glpOPC.png  # Label file
-            ├── label2.glpOPC.png  # Label file
-            └── ...
+        └── labels_val/      # Directory containing validation labels
+            └── ..."
         """
         super().__init__()
         self.data_dir = Path(data_dir)

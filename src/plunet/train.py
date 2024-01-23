@@ -91,14 +91,12 @@ def train(
         verbose=True,  # Print a message when a checkpoint is saved
     )
 
-    lr_monitor = LearningRateMonitor(
-        logging_interval="epoch", log_momentum=True)
+    lr_monitor = LearningRateMonitor(logging_interval="epoch", log_momentum=True)
 
     class PrintLearningRate(Callback):
         def on_epoch_start(self, trainer, pl_module):
             current_lr = trainer.optimizers[0].param_groups[0]["lr"]
-            print(
-                f"Epoch {trainer.current_epoch}: Learning Rate = {current_lr}")
+            print(f"Epoch {trainer.current_epoch}: Learning Rate = {current_lr}")
 
     print_lr_cb = PrintLearningRate()
     # Set up the trainer
